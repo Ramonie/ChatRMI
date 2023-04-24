@@ -2,22 +2,11 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface ChatServerInterface extends Remote {
+    void registerClient(String name, ChatClientInterface client) throws RemoteException;
+    void unregisterClient(String name) throws RemoteException;
+    void broadcast(String message) throws RemoteException;
+    void send(String name, String message) throws RemoteException;
     void registerChatClient(ChatClientInterface chatClient) throws RemoteException;
-
     void broadcastMessage(String message) throws RemoteException;
-
-    void send(String name, String message);
-
-    void registerClient(String name, ChatClientInterface stub);
-
-    String receive();
-
-    void unregisterClient(String name);
-
-    /**
-     * @param message
-     */
-    default void receive(final String message) {
-        System.out.println(message);
-    }
+    String receive() throws RemoteException;
 }

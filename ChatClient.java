@@ -4,16 +4,18 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
 public class ChatClient implements ChatClientInterface {
+
     private String name;
-    private static ChatServerInterface server;
+    private ChatServerInterface server;
     private Scanner scanner;
 
     public ChatClient(String name, ChatServerInterface server) {
         super();
         this.name = name;
-        ChatClient.server = server;
+        this.server = server;
     }
 
+    @Override
     public void receiveMessage(String message) {
         System.out.println(message);
     }
@@ -42,18 +44,11 @@ public class ChatClient implements ChatClientInterface {
     }
 
     public static void main(String[] args) {
-        if (args.length < 2) {
-            System.err.println("Uso: java ChatClient <host> <porta>");
-            System.exit(1);
-        }
 
-        String host = args[0];
-        int port = Integer.parseInt(args[1]);
+        String host = "localhost";
+        int port = Integer.parseInt("1099");
 
         try {
-            ChatClient client = new ChatClient(host, server);
-            ChatClientInterface stub = (ChatClientInterface) UnicastRemoteObject.exportObject(client, 0);
-
             // Obtém o registro RMI do servidor na máquina especificada pelo host
             Registry registry = LocateRegistry.getRegistry(host, port);
 
@@ -64,6 +59,10 @@ public class ChatClient implements ChatClientInterface {
             System.out.print("Digite seu nome: ");
             try (Scanner scanner = new Scanner(System.in)) {
                 String name = scanner.nextLine();
+
+                ChatClient client = new ChatClient(name, server);
+
+                ChatClientInterface stub = (ChatClientInterface) UnicastRemoteObject.exportObject(client, 0);
 
                 // Chama o método register do servidor para registrar o cliente com o nome
                 // escolhido

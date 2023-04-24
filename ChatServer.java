@@ -72,8 +72,16 @@ public class ChatServer implements ChatServerInterface {
 
     @Override
     public void send(String name, String message) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'send'");
+        ChatClientInterface client = clients.get(name);
+        if (client != null) {
+            try {
+                client.receiveMessage("Mensagem privada de " + name + ": " + message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Cliente " + name + " não encontrado");
+        }
     }
 
     @Override
