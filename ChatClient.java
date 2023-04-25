@@ -46,10 +46,10 @@ public class ChatClient extends UnicastRemoteObject implements ChatInterface {
         System.out.print("Digite seu nome: ");
         String username = scanner.nextLine();
         server.login(username, client);
-        System.out.println("Digite 'sair' para sair do chat.");
+        System.out.println("Digite '/exit' para sair do chat.");
         while (true) {
             String message = scanner.nextLine();
-            if (message.equalsIgnoreCase("sair")) {
+            if (message.equalsIgnoreCase("/exit")) {
                 server.logout(username);
                 System.exit(0);
             } else {
