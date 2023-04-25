@@ -1,3 +1,8 @@
+
+/**
+ * ChatClient é uma classe que implementa a interface ChatInterface para se conectar a um servidor de chat
+ * usando RMI e enviar e receber mensagens.
+ */
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -7,17 +12,31 @@ import java.util.Scanner;
 public class ChatClient extends UnicastRemoteObject implements ChatInterface {
     private static final long serialVersionUID = 1L;
 
+    // Cria um novo objeto ChatClient remoto.
+
     protected ChatClient() throws RemoteException {
         super();
     }
+
+    // Imprime a mensagem recebida no console.
 
     public void sendMessage(String message) throws RemoteException {
         System.out.println(message);
     }
 
-    public void login(String username, ChatInterface client) throws RemoteException {}
+    // Não faz nada. Este método é usado pelo servidor de chat para registrar o
+    // cliente.
 
-    public void logout(String username) throws RemoteException {}
+    public void login(String username, ChatInterface client) throws RemoteException {
+    }
+
+    // Não faz nada. Este método é usado pelo servidor de chat para desconectar o
+    // cliente.
+
+    public void logout(String username) throws RemoteException {
+    }
+
+    // Cria uma conexão com o servidor de chat e envia e recebe mensagens.
 
     public static void main(String[] args) throws Exception {
         Registry registry = LocateRegistry.getRegistry("localhost", 1099);
